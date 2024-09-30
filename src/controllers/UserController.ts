@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import User from "../models/User";
+import { tokenize } from "../middlewares/Auth";
 
 
 class UserController {
@@ -17,6 +18,24 @@ class UserController {
         }
     }
 
+    public async login(req: Request, res: Response): Promise<void> {
+        const { email, senha } = req.body;
+    
+        if (!email || !senha) {
+          res.status(401).json({ erro: "Forneça o e-mail e senha" });
+        } else {
+          try {
+            const user = await User.findOne({ email, senha });
+            if (user) {
+              res.json({ ...user.toObject(), token: tokenize(user.toObject()) });
+            } else {
+              res.json({ erro: "Dados de login não conferem" });
+            }
+          } catch (e: any) {
+            res.status(500).json({ erro: e.message });
+          }
+        }
+      }
 
     public async listUsers(_: Request, res: Response): Promise<void> {
         res.send(await User.find(
@@ -51,7 +70,7 @@ class UserController {
       }
 
     public async delete(req: Request, res: Response): Promise<void> {
-        const { id } = req.body;
+        const { id } = req.params;
         const response = await User.findByIdAndDelete(id);
         if (response) {
             res.json(response);

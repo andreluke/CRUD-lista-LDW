@@ -1,6 +1,7 @@
 import mongoose, { ObjectId, Schema, Types } from "mongoose";
+import { IList } from "../interfaces/IList";
 
-const listaSchema = new Schema({
+const listaSchema = new Schema<IList>({
     iduser: {
         type: Types.ObjectId,
         ref: 'User',
@@ -20,6 +21,6 @@ const listaSchema = new Schema({
     }
 })
 
-const Lista = mongoose.model("List", listaSchema)
+const Lista = mongoose.model<IList>("List", listaSchema)
 
 export default Lista

@@ -1,6 +1,5 @@
 import { configDotenv } from "dotenv";
 import mongoose from "mongoose";
-import Grid from 'gridfs-stream';
 
 
 configDotenv()
@@ -8,7 +7,6 @@ configDotenv()
 const uri = process.env.DB_URI || 'TESTE';
 
 const db = mongoose;
-let gfs
 
 export function connect() {
     db.connect(uri, {
@@ -18,10 +16,6 @@ export function connect() {
     .catch((e) => {
         console.error("Erro ao conectar ao MongoDB:", e.message);
     });
-
-    const conn = mongoose.connection;
-        gfs = Grid(conn.db, mongoose.mongo);
-        gfs.collection('uploads');
 
     process.on("SIGINT", async () => {
         try{

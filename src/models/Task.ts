@@ -1,6 +1,7 @@
 import mongoose, { ObjectId, Schema, Types } from "mongoose";
+import { ITask } from "../interfaces/ITask";
 
-const taskSchema = new Schema({
+const taskSchema = new Schema<ITask>({
     idlist: {
         type: Types.ObjectId,
         ref: 'List',
@@ -17,6 +18,7 @@ const taskSchema = new Schema({
         type: String,
         trim: true,
         required: true,
+        maxlength: 6
     },
     descricao:{
         type: String,
@@ -24,13 +26,13 @@ const taskSchema = new Schema({
     },
     prioridade:{
         type: String,
-        enum: ["Alta", "Média", "Baixa"],
+        enum: {values: ["Alta", "Média", "Baixa"], message: "A prioridade só pode ser alta, média ou baixa!"},
         required: true
     },
     status:{
         type: String,
-        enum: ["Concluido", "Não concluido"],
-        default: "Não concluido"
+        enum: ["Concluído", "Não concluído"],
+        default: "Não concluído"
     },
     criadoEm:{
         type: Date,
@@ -42,6 +44,6 @@ const taskSchema = new Schema({
     }
 })
 
-const Task = mongoose.model("Task", taskSchema)
+const Task = mongoose.model<ITask>("Task", taskSchema)
 
 export default Task

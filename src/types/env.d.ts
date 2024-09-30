@@ -1,5 +1,5 @@
 namespace NodeJS {
     interface ProcessEnv {
-        DB_URI: string
+        DB_URI: string,
     }
 }
