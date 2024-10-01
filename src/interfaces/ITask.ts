@@ -1,4 +1,4 @@
-import { ObjectId } from "mongoose";
+import { ObjectId, Schema } from "mongoose";
 
 export interface ITask{
     idlist: ObjectId,
@@ -7,5 +7,6 @@ export interface ITask{
     prioridade: string,
     status: string,
     criadoEm: Date,
-    venceEm: Date
+    venceEm: Date,
+    subTasks: ObjectId[]
 }

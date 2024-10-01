@@ -18,7 +18,8 @@ const listaSchema = new Schema<IList>({
         type: String,
         trim: true,
         required: true,
-    }
+    },
+    tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }]
 })
 
 const Lista = mongoose.model<IList>("List", listaSchema)

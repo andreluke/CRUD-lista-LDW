@@ -41,7 +41,8 @@ const taskSchema = new Schema<ITask>({
     venceEm: {
         type: Date,
         required: true
-    }
+    },
+    subTasks: [{ type: Schema.Types.ObjectId, ref: 'SubTask' }]
 })
 
 const Task = mongoose.model<ITask>("Task", taskSchema)
